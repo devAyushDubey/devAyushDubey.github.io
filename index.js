@@ -1,87 +1,86 @@
-console.log("Running")
+console.log("index.js Running")
 
-var cnv;
-var img;
-var blu;
-var fnt;
-var back;
-var next;
-var playbtn;
-var playholder;
+var canvasInstance;
+var font;
+var background, backgroundBlur;
+var previousTrackBTN, nextTrackBTN, playBTN;
+var playBTNholder;
 var playState = false;
 var music;
-var amp;
+var amplitudeInstance;
 var level;
-var w = 200;
-var h = 200; 
 
 function preload(){
-    img = loadImage('images/wow.jpeg');
-    blu = loadImage('images/blur.png');
-    fnt = loadFont('fonts/GothamMedium.ttf');
-    back = loadImage('images/back.png');
-    next = loadImage('images/next.png');
-    playbtn = loadImage('images/playbtn.png');
+
+    font = loadFont('fonts/GothamMedium.ttf');
+
+    background = loadImage('images/wow.jpeg');
+    backgroundBlur = loadImage('images/blur.png');
+
+    previousTrackBTN = loadImage('images/back.png');
+    nextTrackBTN = loadImage('images/next.png');
+    playBTN = loadImage('images/playbtn.png');
     pausebtn = loadImage('images/pause.png');
+    playBTNholder = playBTN;
+
     soundFormats('mp3');
     music = loadSound('sounds/sound1');
-    playholder = playbtn;
-}
-
-function centerCanvas(){
-    var x = (windowWidth - width)/2;
-    cnv.position(x,0);
-    //console.log(canvas);
+    
 }
 
 function setup() {
-    cnv = createCanvas(400, 400);
-    cnv.style('margin-top','3em');
-    amp = new p5.Amplitude();
+    canvasInstance = createCanvas(400, 400);
+    canvasInstance.style('margin-top','3em');
     centerCanvas();
+
+    amplitudeInstance = new p5.Amplitude(); 
 }
   
 function draw() {
     background(220);
-    //console.log(x);
-    fill(200,0,0);
-    image(img,0,0,400,400);
+
+    image(background,0,0,400,400);
     filter(BLUR,25);
     filter(DILATE);
-    image(img,87.5,35,225,225);
+
+    image(background,87.5,35,225,225);
+
     fill("white");
     textStyle(BOLD);
-    textFont(fnt);
+    textFont(font);
     textAlign(CENTER);
     textSize(18);
     text("Man On The Moon",200,285);
-    image(playholder,175,315,50,50);
-    image(next,260,330,20,20);
-    image(back,120,330,20,20);
-    level = amp.getLevel();
-    console.log(level);
-    //centerCanvas(img);
+
+    image(playBTNholder,175,315,50,50);
+    image(nextTrackBTN,260,330,20,20);
+    image(previousTrackBTN,120,330,20,20);
+
+    level = amplitudeInstance.getLevel();
 }
 
 function windowResized() {
     centerCanvas();
-    //centerCanvas(img);
 }
 
 function mousePressed(){
-    //console.log(playholder);
     if(mouseX >= 175 && mouseX <= 225 && mouseY >= 315 && mouseY <= 365){
         if(!playState){
             playState = true;
-            playholder = pausebtn;
+            playBTNholder = pausebtn;
             music.play();
         }
         else{
             playState = false;
-            playholder = playbtn;
+            playBTNholder = playBTN;
             music.pause();
         }
         
     }
         
+}
+
+function centerCanvas(){
+    var x = (windowWidth - width)/2;
+    canvasInstance.position(x,0);
 }
