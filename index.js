@@ -2,7 +2,7 @@ console.log("index.js Running")
 
 var canvasInstance;
 var font;
-var background, backgroundBlur;
+var backgrnd, backgrndBlur;
 var previousTrackBTN, nextTrackBTN, playBTN;
 var playBTNholder;
 var playState = false;
@@ -14,8 +14,8 @@ function preload(){
 
     font = loadFont('fonts/GothamMedium.ttf');
 
-    background = loadImage('images/wow.jpeg');
-    backgroundBlur = loadImage('images/blur.png');
+    backgrnd = loadImage('images/wow.jpeg');
+    backgrndBlur = loadImage('images/blur.png');
 
     previousTrackBTN = loadImage('images/back.png');
     nextTrackBTN = loadImage('images/next.png');
@@ -39,11 +39,11 @@ function setup() {
 function draw() {
     background(220);
 
-    image(background,0,0,400,400);
+    image(backgrnd,0,0,400,400);
     filter(BLUR,25);
     filter(DILATE);
 
-    image(background,87.5,35,225,225);
+    image(backgrnd,87.5,35,225,225);
 
     fill("white");
     textStyle(BOLD);
